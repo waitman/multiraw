@@ -1,4 +1,5 @@
 prefix=/usr/local
+man7dir=/usr/local/man/man7
 
 all: multiraw dcraw-m
 
@@ -12,10 +13,12 @@ clean:
 	rm multiraw dcraw-m
 
 install:
-	install -m 0755 multiraw ${prefix}/bin
-	install -m 0755 dcraw-m ${prefix}/bin
+	install -m 0755 -g wheel -o root multiraw ${prefix}/bin
+	install -m 0755 -g wheel -o root dcraw-m ${prefix}/bin
+	-install -m 0644 -g wheel -o root multiraw.7 ${man7dir}
 
 deinstall:
 	rm -f ${prefix}/bin/multiraw
 	rm -f ${prefix}/bin/dcraw-m
+	rm -f ${man7dir}/multiraw.7
 
