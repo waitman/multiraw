@@ -1,0 +1,32 @@
+multiraw.c
+Copyright 2013 by Waitman Gobble <ns@waitman.net>
+See LICENSE for copying information.
+
+Processing Camera Raw files to JPEG, TIFF, or PPM formats is extremely time intensive. Utilizing multiple threads on multi-core systems can realize an increase of productivity and time savings of 60% ... ie, (769-257)/769 = .667
+ 
+In these examples we are using dcraw-m, a modified version of dcraw which automatically rotates exported thumbnails and has a camera timezone offset adjustment variable.
+
+Ref:
+http://dx.burplex.com/bin/autorot.html
+http://dx.burplex.com/bin/photohack.html
+
+The multiraw.c program allows the user to batch convert Camera Raw format files in parallel using pthreads. The user may specify the number of threads to run, or they may use the Auto Thread switch which will cause the software to determine the appropriate number of threads based on the task requested. By default, multiraw.c calls dcraw-m, which is included. If the user wishes to use the unmodified dcraw program, it may be specified using the -o switch.
+
+multiraw.c Usage 
+
+# multiraw 
+
+usage: multiraw [-enatvoh] /path/to/file
+
+-e	Command Line Options to pass to dcraw-m, example: -e '-e -R' 
+-n	Number of Threads
+-a	Automatically determine number of threads
+-t	Report Exec Time (secs)
+-v	Verbose Messages
+-o	Use original dcraw
+-h	Help
+
+multiraw requires the path to a file containing Raw images to process. This file may be created using the Image previewer Qt4 Application. The file shall have one filename per line.
+
+multiraw was developed on a FreeBSD 10.0-CURRENT machine, however should be compatible with 8 and 9.
+
